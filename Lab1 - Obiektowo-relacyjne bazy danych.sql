@@ -1,4 +1,4 @@
-1.
+--ZAD 1
 CREATE TYPE samochod AS OBJECT (
     marka VARCHAR2(20),
     model VARCHAR2(20),
@@ -14,7 +14,7 @@ insert into samochody values(new samochod('Fiat', 'Brava', 60000, date '1999-11-
 insert into samochody values(new samochod('Ford', 'Mondeo', 80000, date '1997-05-10', 45000));
 insert into samochody values(new samochod('Mazda', '323', 12000, date '2000-09-22', 52000));
 
-2.
+--ZAD 2
 create  table wlasciciele(
     imie varchar2(100), 
     nazwisko varchar2(100), 
@@ -24,8 +24,7 @@ create  table wlasciciele(
 insert into wlasciciele values('Jan', 'Kowalski', new samochod('Ford', 'Seicento', 30000, date '2010-12-02', 19500));
 insert into wlasciciele values('Adam', 'Nowak', new samochod('Opel', 'Astra', 34000, date '2009-06-01', 33700));
 
-3.
-
+--ZAD 3
 alter type samochod replace as object(
     marka varchar2(20), 
     model varchar2(20), 
@@ -42,4 +41,5 @@ CREATE OR REPLACE TYPE BODY samochod AS
     END wartosc;
 END;
 
-4.
+--ZAD 4
+
