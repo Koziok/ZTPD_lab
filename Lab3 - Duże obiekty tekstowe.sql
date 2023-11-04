@@ -84,9 +84,34 @@ select dbms_lob.getlength(dokument) from dokumenty;
 drop table dokumenty;
 
 --ZAD 12
-
+create or replace procedure CLOB_CENSOR (input in out clob, textr in varchar2) as 
+    temp integer := 0;
+    buffer_temp varchar2(100) := '';
+begin
+    temp := DBMS_LOB.INSTR(input, textr);
+    buffer_temp := '';
+    for counter in 1..length(textr)
+    loop
+        buffer_temp := buffer_temp || '.'; 
+    end loop;
+    while temp > 0
+    loop
+        DBMS_LOB.write(input, temp, length(buffer_temp), buffer_temp);
+        temp := DBMS_LOB.INSTR(input, buffer_temp);
+    end loop;
+end CLOB_CENSOR;
 
 --ZAD 13
+create table biographies_copy as select * from ztpd.biographies;
 
+declare
+    lobd clob;
+begin
+    select bio into lobd from biographies_copy where id = 1 for update;
+    clob_censor(lobd, 'Cimrman');
+end;
+
+select * from biographies_copy;
 
 --ZAD 14
+drop table biographies_copy;
