@@ -1,0 +1,87 @@
+-- ZAD 8
+<xsl:apply-templates select="SWIAT/KRAJE/KRAJ"/>
+
+-- ZAD 11
+<xsl:apply-templates select="SWIAT/KRAJE/KRAJ[@KONTYNENT = 'k1']"/>
+
+-- ZAD 12
+<xsl:apply-templates select="SWIAT/KRAJE/KRAJ[@KONTYNENT = /SWIAT/KONTYNENTY/KONTYNENT[NAZWA  = 'Europe']/@ID]"/>
+
+-- ZAD 13
+Liczba krajów: <xsl:value-of select="1"/>
+
+-- ZAD 15
+Liczba krajów: <xsl:value-of select="count(SWIAT/KRAJE/KRAJ[@KONTYNENT = 'k1'])"/>
+
+-- ZAD 16
+<xsl:template match="*">
+  <tr>
+    <td><xsl:value-of select="1"/></td>
+    <td><xsl:value-of select="NAZWA"/></td>
+    <td><xsl:value-of select="STOLICA"/></td>
+  </tr>
+</xsl:template>
+
+-- ZAD 17
+<xsl:template match="*">
+  <tr>
+    <td><xsl:value-of select="position()"/></td>
+    <td><xsl:value-of select="NAZWA"/></td>
+    <td><xsl:value-of select="STOLICA"/></td>
+  </tr>
+</xsl:template>
+
+-- ZAD 18
+<tr><th>lp</th><th>Kraj</th><th>Stolica</th></tr>
+
+-- ZAD 21
+<xsl:apply-templates select="SWIAT/KRAJE/KRAJ[@KONTYNENT = /SWIAT/KONTYNENTY/KONTYNENT[NAZWA  = 'Europe']/@ID]">
+  <xsl:sort select="NAZWA"/>
+</xsl:apply-templates>
+
+-- ZAD 26
+for $k in doc('file:///C:/Users/mati-/Desktop/Programowanie/XPath-XSLT/swiat.xml')/SWIAT/KONTYNENTY/KONTYNENT
+return <KRAJ>
+ {$k/NAZWA, $k/STOLICA}
+</KRAJ>
+
+-- ZAD 27
+for $k in doc('file:///C:/Users/mati-/Desktop/Programowanie/XPath-XSLT/swiat.xml')/SWIAT/KRAJE/KRAJ
+return <KRAJ>
+ {$k/NAZWA, $k/STOLICA}
+</KRAJ>
+
+-- ZAD 28
+for $k in doc('file:///C:/Users/mati-/Desktop/Programowanie/XPath-XSLT/swiat.xml')/SWIAT/KRAJE/KRAJ[starts-with(NAZWA, 'A')]
+return <KRAJ>
+ {$k/NAZWA, $k/STOLICA}
+</KRAJ>
+
+-- ZAD 29
+for $k in doc('file:///C:/Users/mati-/Desktop/Programowanie/XPath-XSLT/swiat.xml')/SWIAT/KRAJE/KRAJ[starts-with(NAZWA, substring(STOLICA, 1, 1))]
+return <KRAJ>
+ {$k/NAZWA, $k/STOLICA}
+</KRAJ>
+
+-- ZAD 30
+doc('file:///C:/Users/mati-/Desktop/Programowanie/XPath-XSLT/swiat.xml')//KRAJ
+
+-- ZAD 32
+doc('file:///C:/Users/mati-/Desktop/Programowanie/XPath-XSLT/zesp_prac.xml')//ROW/PRACOWNICY/ROW/NAZWISKO
+
+-- ZAD 33
+for $k in doc('file:///C:/Users/mati-/Desktop/Programowanie/XPath-XSLT/zesp_prac.xml')/ZESPOLY/ROW[NAZWA = 'SYSTEMY EKSPERCKIE']/PRACOWNICY/ROW
+return $k/NAZWISKO
+
+-- ZAD 34
+for $k in count(doc('file:///C:/Users/mati-/Desktop/Programowanie/XPath-XSLT/zesp_prac.xml')/ZESPOLY/ROW[ID_ZESP = 10]/PRACOWNICY/ROW)
+return $k
+
+-- ZAD 35
+for $k in doc('file:///C:/Users/mati-/Desktop/Programowanie/XPath-XSLT/zesp_prac.xml')/ZESPOLY/ROW/PRACOWNICY/ROW[ID_SZEFA = 100]
+return $k/NAZWISKO
+
+-- ZAD 36
+let $k := doc('file:///C:/Users/mati-/Desktop/Programowanie/XPath-XSLT/zesp_prac.xml')/ZESPOLY/ROW/PRACOWNICY/ROW[ID_ZESP = /ZESPOLY/ROW/PRACOWNICY/ROW[NAZWISKO = 'BRZEZINSKI']/ID_ZESP]
+return sum($k/PLACA_POD)
+
